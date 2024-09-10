@@ -4,10 +4,15 @@
 const int MAX_CLIENTES = 10;
 const int MAX_OPERACIONES = 10;
 
+
+
+
 int cuentas[10];
 int pass[10];
 float saldos[10];
 int estados[10];
+
+
 
 // prototipos de la funciones
 void cargarClientes();
@@ -17,10 +22,13 @@ void realizarDeposito(int indiceCliente);
 void realizarExtraccion(int indiceCliente);
 void consultarSaldo(int indiceCliente);
 void mostrarOperacionesYSaldo(int indiceCliente, int cantOperaciones);
+void realizarTransferencia(int indiceCliente);
 
 int main()
 {
     //COMPLETAR: aca debemos llamar a la funcion que carga los datos de los clientes en los arreglos
+     cargarClientes();
+
 
     int indiceClienteActual = -1; // en esta variable vamos a almacenar el indice del cliente que inició sesión
                                   // la inicializamos en un valor de índice inválido
@@ -67,7 +75,13 @@ int main()
                 case 4:
                 mostrarOperacionesYSaldo(indiceClienteActual, cantidadOperaciones);
                     break;
-                case 5:
+
+                     case 5:
+                realizarTransferencia(indiceClienteActual );
+
+                 cantidadOperaciones++;
+                    break;
+                case 6:
                   printf("Sesión finalizada. Gracias.\n\n");
                     break;
                 default:
@@ -135,8 +149,10 @@ void cargarClientes()
     estados[7] = 0;
     estados[8] = 1;
     estados[9] = 1;
-}
 
+
+
+}
 void mostrarMenu()
 {
     printf("\nSeleccione una opción:\n");
@@ -144,7 +160,8 @@ void mostrarMenu()
     printf("2. Realizar una extracción\n");
     printf("3. Consultar el saldo de la cuenta\n");
     printf("4. Mostrar cantidad de operaciones realizadas y saldo actual\n");
-    printf("5. Salir de la sesión\n");
+     printf("5. Realizar transferencia\n");
+    printf("6. Salir de la sesión\n");
     printf("Opción: ");
 }
 
@@ -282,4 +299,20 @@ void mostrarOperacionesYSaldo(int indiceCliente, int cantOperaciones)
 
     printf("Su saldo es %.2f y la cantidad de operaciones realizadas es %d", saldos[indiceCliente], cantOperaciones);
 
+}
+
+
+void realizarTransferencia(int indiceCliente) 
+
+{
+    int cuentaDestino;
+    float monto;
+    int i;
+
+    printf("Ingrese el número de la cuenta a la que quiere transferir: ");
+    scanf("%d", &cuentaDestino);
+
+  
+    int cuentaDestinoIndice = -1;
+  
 }
