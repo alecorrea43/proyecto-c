@@ -240,23 +240,32 @@ void realizarDeposito(int indiceCliente)
 }
 
 void realizarExtraccion(int indiceCliente)
-
 {
+    float monto;
 
-    // COMPLETAR
+    // Pido el monto a extraer, validando que no sea menor o igual a cero
+    do
+    {
+        printf("Ingrese el monto a extraer: ");
+        scanf("%f", &monto);
 
-    //voy a pedir el monto a extraer, validando que el mismo no sea menor o igual que cero
+        if (monto <= 0)
+        {
+            printf("El monto no puede ser negativo o cero.\n");
+        }
+    } while (monto <= 0);
 
- 
-
-    //voy a verificar que el monto ingresado no supere al saldo del cliente
-
-    //si el el monto es menor o igual que el saldo del clliente (es decir saldos[indiceCliente]) 
-
-    //voy a actualizar el saldo del cliente (es decir saldos[indiceCliente] = saldos[indiceCliente] - monto)
-
-    //si el monto supera al saldo del cliente informar "No dispone de saldo suficiente"
-
+    // Verifico que el monto no supere el saldo disponible del cliente
+    if (monto > saldos[indiceCliente])
+    {
+        printf("No dispone de saldo suficiente.\n");
+    }
+    else
+    {
+        // Actualizo el saldo del cliente restando el monto extraído
+        saldos[indiceCliente] -= monto;
+        printf("Extracción exitosa. Su nuevo saldo es: %.2f\n", saldos[indiceCliente]);
+    }
 }
 
 void consultarSaldo(int indiceCliente)
