@@ -76,7 +76,8 @@ int main()
                 mostrarOperacionesYSaldo(indiceClienteActual, cantidadOperaciones);
                     break;
 
-                     case 5:
+                     
+                case 5:
                 realizarTransferencia(indiceClienteActual );
 
                  cantidadOperaciones++;
@@ -88,7 +89,7 @@ int main()
                     printf("Opción inválida. Por favor, ingrese una opción válida.\n");
                     break;
                 }
-            } while (opcion != 5 && cantidadOperaciones < MAX_OPERACIONES);
+            } while (opcion != 6 && cantidadOperaciones < MAX_OPERACIONES);
             // el menu se repite mientras el cliente no ingrese 5 y la cantidad de operaciones sea menor a la MAX_OPERACIONES (esta variable esta iniclaizada en 0)
 
             if (cantidadOperaciones >= MAX_OPERACIONES)
@@ -302,17 +303,55 @@ void mostrarOperacionesYSaldo(int indiceCliente, int cantOperaciones)
 }
 
 
-void realizarTransferencia(int indiceCliente) 
-
-{
+void realizarTransferencia(int indiceCliente) {
     int cuentaDestino;
     float monto;
     int i;
-
+   
     printf("Ingrese el número de la cuenta a la que quiere transferir: ");
     scanf("%d", &cuentaDestino);
 
-  
+
     int cuentaDestinoIndice = -1;
-  
+    for (int i = 0; i < MAX_CLIENTES; i++) {
+        if (cuentas[i] == cuentaDestino) {
+            cuentaDestinoIndice = i;
+            break;
+        }
+    }
+
+   
+    if (cuentaDestinoIndice == -1) {
+        printf("La cuenta no existe.\n");
+        return;
+    }
+
+    
+    if (cuentaDestino == cuentas[indiceCliente]) {
+        printf("No puede transferir fondos a su propia cuenta.\n");
+        return;
+    }
+
+     if (cuentaDestino == estados[indiceCliente])
+                {
+                    estados[i] = 0; 
+                    printf("No se permiten realizar depositos a esta cuenta\n");
+                }
+ 
+    do {
+        printf("Ingrese el monto a transferir: ");
+        scanf("%f", &monto);
+        if (monto <= 0) {
+            printf("El monto debe ser mayor a cero.\n");
+        } else if (monto > saldos[indiceCliente]) {
+            printf("No dispone de saldo suficiente para realizar la transferencia.\n");
+        }
+    } while (monto <= 0 || monto > saldos[indiceCliente]);
+
+   
+    saldos[indiceCliente] -= monto;
+    saldos[cuentaDestinoIndice] += monto;
+
+    printf("Transferencia realizada con éxito. Su nuevo saldo es: %.2f\n", saldos[indiceCliente]);
 }
+
